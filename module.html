@@ -1,98 +1,240 @@
 <!DOCTYPE html>
+<!--
+  ============================================================================
+  PAGE 3 / 3 — PAGE MODULE (lecture d'un module de formation)
+  ============================================================================
+  Cette page combine plusieurs composants Bootstrap :
+    - Navbar (en-tête)
+    - Grille à 2 colonnes : MENU latéral + CONTENU
+    - List group (le « Menu de la formation »)
+    - Progress (la barre de « Progression »)
+    - Card (le bloc de contenu du module)
+    - Pagination (Previous 1 2 3 Next)
+
+  Enjeu RESPONSIVE  sur mobile le menu latéral ne peut PAS
+  rester à gauche. On le fait passer AU-DESSUS du contenu (empilement), puis
+  on le replace en colonne de gauche dès qu'on a la place (>=768px). Là c'est au moins 2 points de plus :)
+  Références :
+    https://getbootstrap.com/docs/5.3/components/list-group/
+    https://getbootstrap.com/docs/5.3/components/progress/
+    https://getbootstrap.com/docs/5.3/components/pagination/
+-->
 <html lang="fr">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Module</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <title>Module 1 — Les fondamentaux du Web Design Responsive</title>
+
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+    crossorigin="anonymous">
 </head>
 <body>
 
-  <!-- NAVBAR -->
-  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <!-- NAVBAR — identique aux autres pages (voir index.html pour les détails). -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-      <a class="navbar-brand" href="index.html">Navbar</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <a class="navbar-brand fw-bold" href="index.html">LOGO.</a>
+      <button class="navbar-toggler" type="button"
+              data-bs-toggle="collapse" data-bs-target="#navMenu"
+              aria-controls="navMenu" aria-expanded="false"
+              aria-label="Ouvrir la navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <div class="collapse navbar-collapse" id="navMenu">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link" href="index.html">Accueil</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="formations.html">Toutes formations</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="module.html">Responsive Web Design</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="module.html">Framework Bootstrap</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="module.html">MkDocs en intégration</a>
-          </li>
+          <li class="nav-item"><a class="nav-link" href="index.html">Accueil</a></li>
+          <li class="nav-item"><a class="nav-link" href="formations.html">Toutes formations</a></li>
+          <li class="nav-item"><a class="nav-link active" aria-current="page" href="module.html">Responsive Web Design</a></li>
+          <li class="nav-item"><a class="nav-link" href="module.html">Framework Bootstrap</a></li>
+          <li class="nav-item"><a class="nav-link" href="module.html">MkDocs en intégration</a></li>
         </ul>
         <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
+          <input class="form-control me-2" type="search" placeholder="Rechercher" aria-label="Rechercher">
+          <button class="btn btn-outline-light" type="submit">Rechercher</button>
         </form>
       </div>
     </div>
   </nav>
-  <!-- FIN NAVBAR -->
 
-  <!-- GRILLE (row / col) -->
-  <div class="container">
-    <div class="row">
+  <main class="container py-4">
 
-      <div class="col-md-3">
+    <!--
+      BANDEAU « Formation 1 ».
+      On utilise une simple boîte avec utilitaires : bg-body-secondary (gris clair), border, rounded, p-3 (padding). C'est plus léger qu'un composant et suffit pour un titre de page.
+    -->
+    <div class="bg-body-secondary border rounded p-3 mb-4">
+      <h1 class="h4 m-0">Formation 1</h1>
+    </div>
 
-        <!-- LIST GROUP -->
-        <ul class="list-group">
-          <li class="list-group-item active" aria-current="true">Module 1</li>
-          <li class="list-group-item">Module 2</li>
-          <li class="list-group-item">Module 3</li>
-          <li class="list-group-item">...</li>
-        </ul>
-        <!-- FIN LIST GROUP -->
+    <!--
+      GRILLE 2 COLONNES : menu (gauche) + contenu (droite).
+      g-4 : espace entre les deux colonnes.
+    -->
+    <div class="row g-4">
 
-      </div>
+      <!--
+        ====================================================================
+        COLONNE GAUCHE — MENU DE LA FORMATION (composant « Offcanvas » responsive)
+        ====================================================================
+        https://getbootstrap.com/docs/5.3/components/offcanvas/
 
-      <div class="col-md-9">
+        POURQUOI on change d'approche :
+        D'abord j'adore ça, c'est un super composant utile je trouve.
+        une list-group affiché en permanence prend toute la largeur AU-DESSUS du contenu sur mobile : l'apprenant doit faire défiler tout le menu avant
+        d'atteindre sa leçon. Trop envahissant.
 
-        <!-- PROGRESS -->
-        <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-          <div class="progress-bar" style="width: 25%"></div>
-        </div>
-        <!-- FIN PROGRESS -->
+        SOLUTION 100 % Bootstrap : l'OFFCANVAS RESPONSIVE.
+        La classe « offcanvas-lg » signifie :
+          - en DESSOUS de lg (mobile/tablette) : le menu est caché et glisse depuis le côté quand on clique sur un bouton (comme un tiroir) ;
+          - à partir de lg (desktop) : le menu se comporte normalement, affiché en colonne de gauche — le rendu desktop validé reste INCHANGÉ.
+        C'est le pendant exact du hamburger de la navbar, appliqué au sous-menu. Niiiiice :)
 
-        <!-- CARD -->
-        <div class="card">
-          <div class="card-body">
-            Module 1 : Les fondamentaux du Web Design Responsive
+        col-12 / col-md-4 / col-lg-3 : la colonne garde sa largeur sur desktop.
+      -->
+      <aside class="col-12 col-lg-3">
+
+        <!--
+          BOUTON D'OUVERTURE — visible UNIQUEMENT sous lg (.d-lg-none).
+          data-bs-toggle="offcanvas" + data-bs-target : ouvre le tiroir ciblé.
+          .w-100 : le bouton prend toute la largeur sur mobile (zone de tap large).
+          À l'intérieur : libellé du menu (remplace l'ancien titre permanent).
+        -->
+        <button class="btn btn-outline-secondary w-100 d-lg-none mb-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#menuFormation" aria-controls="menuFormation">
+          ☰ Menu de la formation
+        </button>
+
+        <!--
+          LE TIROIR LUI-MÊME.
+          .offcanvas-lg        : comportement responsive décrit ci-dessus.
+          .offcanvas-start     : glisse depuis la GAUCHE (cohérent avec un menu
+                                 latéral). Variantes : -end, -top, -bottom.
+          tabindex="-1"        : recommandé par la doc pour la gestion du focus. pro !
+        -->
+        <div class="offcanvas-lg offcanvas-start" tabindex="-1"
+             id="menuFormation" aria-labelledby="menuFormationLabel">
+
+          <!--
+            EN-TÊTE DU TIROIR — n'apparaît qu'en mode mobile (le offcanvas).
+            Contient le titre + le bouton de fermeture (croix) automatique.
+          -->
+          <div class="offcanvas-header">
+            <h2 class="offcanvas-title h6 fw-bold m-0" id="menuFormationLabel">
+              Menu de la formation :
+            </h2>
+            <!-- data-bs-dismiss="offcanvas" : ferme le tiroir. .d-lg-none par cohérence. -->
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+                    data-bs-target="#menuFormation" aria-label="Fermer"></button>
+          </div>
+
+          <!--
+            CORPS DU TIROIR — contient le menu.
+            On RÉUTILISE le list-group à l'intérieur : il reste un bon composant pour une liste verticale, mais il n'est désormais visible en permanence que sur desktop. Sur mobile il vit dans le tiroir.
+            Sur desktop, l'en-tête ci-dessus disparaît : on remet donc ici un titre visible seulement en desktop (.d-none .d-lg-block).
+          -->
+          <!--
+            .flex-column : sur desktop, Bootstrap rend l'offcanvas-body en display:flex avec direction « ligne » par défaut, ce qui placerait le titre et le list-group CÔTE À CÔTE. On force l'empilement vertical pour que le titre reste AU-DESSUS du menu (retour à la ligne).
+          -->
+          <div class="offcanvas-body flex-column">
+            <h2 class="h6 fw-bold d-none d-lg-block">Menu de la formation :</h2>
+            <div class="list-group">
+              <!-- .active : item courant (Module 1). aria-current : accessibilité. -->
+              <a href="#" class="list-group-item list-group-item-action active"
+                 aria-current="true">&gt; Module 1</a>
+              <a href="#" class="list-group-item list-group-item-action">Module 2</a>
+              <a href="#" class="list-group-item list-group-item-action">Module 3</a>
+              <a href="#" class="list-group-item list-group-item-action">Module 4</a>
+              <a href="#" class="list-group-item list-group-item-action">Module 5</a>
+            
+            </div>
           </div>
         </div>
-        <!-- FIN CARD -->
+      </aside>
 
-        <!-- PAGINATION -->
-        <nav aria-label="Page navigation example">
-          <ul class="pagination">
-            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
+      <!--
+        ====================================================================
+        COLONNE DROITE — PROGRESSION + TITRE + CONTENU
+        ====================================================================
+        col-12   : pleine largeur sur mobile ET tablette, car le menu de gauche
+                   est alors replié en tiroir (offcanvas) et ne prend pas de place.
+        col-lg-9 : occupe le reste de la ligne (12 - 3) seulement à partir de lg,
+                   quand le menu redevient une colonne fixe à gauche.
+      -->
+      <section class="col-12 col-lg-9">
+
+        <!--
+          LIGNE « Progression » + barre.
+          d-flex align-items-center : titre et barre alignés sur la même ligne.
+          flex-wrap : sur mobile, si ça ne tient pas, la barre passe en dessous.
+          gap-3 : espace entre le libellé et la barre.
+        -->
+        <div class="d-flex align-items-center flex-wrap gap-3 mb-3">
+          <h2 class="h4 text-secondary fw-bold m-0">Progression</h2>
+
+          <!--
+            COMPOSANT « Progress ».
+            .progress           : la piste (fond).
+            .flex-grow-1        : la barre occupe tout l'espace restant de la ligne.
+            role/aria-*         : sémantique accessible (valeur min, max, actuelle).
+            .progress-bar style="width:40%" : remplissage. On a choisi 40 % pour illustrer un module en cours. Pour changer l'avancement, modifier le width ET aria-valuenow.
+          -->
+          <div class="progress flex-grow-1" role="progressbar"
+               aria-label="Progression de la formation"
+               aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">
+            <div class="progress-bar" style="width: 40%">40%</div>
+          </div>
+        </div>
+
+        <!--
+          TITRE DU MODULE.
+          Boîte grise claire, même style que le bandeau « Formation 1 ».
+        -->
+        <div class="bg-body-secondary border rounded p-3 mb-3">
+          <h3 class="h5 m-0">Module 1 : Les fondamentaux du Web Design Responsive</h3>
+        </div>
+
+        <!--
+          BLOC DE CONTENU — composant « Card ».
+          On lui donne une hauteur minimale pour reproduire la grande zone vide du wireframe (sera remplie par le vrai contenu pédagogique).
+        -->
+        <div class="card">
+          <div class="card-body" style="min-height: 420px;">
+            <p class="text-muted">
+              Contenu du module… (texte, images, vidéos de la leçon).
+            </p>
+          </div>
+        </div>
+
+        <!--
+          PAGINATION (Previous 1 2 3 Next).
+          <nav> + aria-label : bonne pratique d'accessibilité pour une pagination.
+          .justify-content-center : centre la pagination horizontalement, comme sur le wireframe.
+        -->
+        <nav aria-label="Navigation des pages du module" class="mt-4">
+          <ul class="pagination justify-content-center">
+            <!-- .disabled : « Previous » inactif car on est sur la 1re page. -->
+            <li class="page-item disabled">
+              <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+            </li>
+            <!-- .active : page courante (1). -->
+            <li class="page-item active" aria-current="page">
+              <a class="page-link" href="#">1</a>
+            </li>
             <li class="page-item"><a class="page-link" href="#">2</a></li>
             <li class="page-item"><a class="page-link" href="#">3</a></li>
             <li class="page-item"><a class="page-link" href="#">Next</a></li>
           </ul>
         </nav>
-        <!-- FIN PAGINATION -->
 
-      </div>
-
+      </section>
     </div>
-  </div>
-  <!-- FIN GRILLE -->
+  </main>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
 </body>
 </html>
