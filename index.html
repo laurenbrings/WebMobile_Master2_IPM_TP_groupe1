@@ -1,24 +1,99 @@
 <!DOCTYPE html>
+<!--
+  ============================================================================
+  PAGE 1 / 3 — ACCUEIL
+  ============================================================================
+  Objectif pédagogique : implémenter UNIQUEMENT des composants standard
+  Bootstrap 5, sans aucun CSS personnalisé 
+
+  J'ai réalisé de nombreux sites mais aucun avec Bootstrap encore.
+  Je découvre Bootstrap est mobile-first (excellent) : rappel des breakpoints :
+  (aucun) = >=0px 
+  sm = >=576px
+  md = >=768px
+  lg = >=992px
+  xl = >=1200px
+  xxl = >=1400px
+  
+  Rappel perso : col-12 col-md-4 signifie pleine largeur sur mobile, puis 1/3 de largeur à partir de 768px ».
+-->
 <html lang="fr">
 <head>
+
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Accueil</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <title>Accueil de notre catalogue de formations</title>
+
+  <!--
+    CSS Bootstrap servi par le CDN officiel (jsDelivr).
+    On choisit la version compilée « complète » : tous les composants sont
+    disponibles immédiatement, idéal pour un exercice d'apprentissage.
+
+  -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+    crossorigin="anonymous">
 </head>
 <body>
 
-  <!-- NAVBAR -->
-  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <!--
+    ========================================================================
+    EN-TÊTE : NAVBAR (composant « Navbar »)
+    ========================================================================
+    https://getbootstrap.com/docs/5.3/components/navbar/
+
+    Pourquoi ce composant : il fournit gratuitement le menu « hamburger » responsive. 
+
+    Paramètres choisis :
+      navbar          : active le composant.
+      navbar-expand-lg: le menu s'affiche en barre horizontale à partir de  992px (lg) ; EN DESSOUS, il se replie en hamburger.
+                        On a choisi « lg » car les liens sont nombreux (Accueil, Toutes formations, 3 thèmes) et tiennent mal sur tablette. Pour déplier plus tôt : « navbar-expand-md ».
+      bg-dark         : fond sombre, conforme au gris foncé du wireframe.
+      navbar-dark     : indique à Bootstrap d'utiliser des textes/icônes clairs adaptés à un fond sombre.
+  -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <!--
+      .container-fluid : conteneur pleine largeur avec marges internes (gouttières). 
+      Alternative : .container (largeur max centrée). On garde fluid pour que la navbar occupe toute la largeur, comme sur le wireframe.
+    -->
     <div class="container-fluid">
-      <a class="navbar-brand" href="index.html">Navbar</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+      <!-- LOGO : .navbar-brand est la zone de marque, toujours visible. -->
+      <a class="navbar-brand fw-bold" href="index.html">LOGO.</a>
+
+      <!--
+        BOUTON HAMBURGER — visible uniquement sous le breakpoint « lg ».
+        data-bs-toggle / data-bs-target : attributs gérés par le JS de Bootstrap
+        pour ouvrir/fermer la zone dont l'id = « navMenu ».
+        aria-* : accessibilité (état + libellé lu par les lecteurs d'écran).
+        .navbar-toggler-icon dessine les 3 barres en pur CSS (aucune image).
+      -->
+      <button class="navbar-toggler" type="button"
+              data-bs-toggle="collapse" data-bs-target="#navMenu"
+              aria-controls="navMenu" aria-expanded="false"
+              aria-label="Ouvrir la navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+      <!--
+        ZONE REPLIABLE — .collapse .navbar-collapse.
+        Sur mobile elle est masquée puis dépliée par le hamburger - à partir de « lg » elle est toujours affichée en ligne.
+      -->
+      <div class="collapse navbar-collapse" id="navMenu">
+
+        <!--
+        NAV :  LIENS. 
+        varialbes: 
+          me-auto : marge droite « auto » qui pousse le bloc suivant (recherche) à l'extrémité droite — reproduit le wireframe.
+          mb-2 mb-lg-0 : petit espacement vertical en mode hamburger, supprimé en mode barre (lg).
+        -->
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <!-- .active + aria-current : indique la page courante. -->
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="index.html">Accueil</a>
+            <a class="nav-link active" aria-current="page" href="index.html">Accueil</a
           </li>
           <li class="nav-item">
             <a class="nav-link" href="formations.html">Toutes formations</a>
@@ -33,70 +108,217 @@
             <a class="nav-link" href="module.html">MkDocs en intégration</a>
           </li>
         </ul>
+
+        <!--
+          CHAMP DE RECHERCHE — pattern officiel Forms in navbar .
+          d-flex : conteneur flex pour aligner champ + bouton sur une ligne.
+          role="search" pour accessibilité.
+        -->
         <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
+          <input class="form-control me-2" type="search"
+                 placeholder="Rechercher" aria-label="Rechercher">
+          <!-- outline-light : bouton bordé clair, lisible sur la navbar sombre. -->
+          <button class="btn btn-outline-light" type="submit">Rechercher</button>
         </form>
       </div>
     </div>
   </nav>
-  <!-- FIN NAVBAR -->
 
-  <!-- GRILLE (row / col) -->
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6">
-        <h1>Et Epigonus quidem amictu tenus philosophus, ut apparuit, prece frustra temptata, sulcatis lateribus morti</h1>
-        <p>Et Epigonus quidem amictu tenus philosophus, ut apparuit, prece frustra temptata, sulcatis lateribus mortisque metu admoto turpi confessione cogitatorum socium, quae nulla erant, fuisse firmavit cum nec vidisset quicquam nec audisset penitus expers forensium rerum.</p>
+  <!--
+    ========================================================================
+    SECTION HÉRO : titre + texte à gauche, image à droite
+    ========================================================================
+    On utilise la GRILLE Bootstrap (row/col).
+    + variables :
+    .container : conteneur centré à largeur maximale, marges latérales auto.
+    .py-5 / .my-4 : espacements verticaux (padding/margin) via les utilitaires
+                    d'espacement (échelle 0 à 5).
+  -->
+  <main class="container py-5">
+
+    <!--
+      .row = ligne de la grille (12 colonnes).
+      .align-items-center : centre verticalement les 2 colonnes entre elles.
+      .g-4 : « gutter » (espace) entre les colonnes.
+    -->
+    <div class="row align-items-center g-4">
+
+      <!--
+        COLONNE TEXTE.
+        col-12      : pleine largeur sur mobile (le texte passe AU-DESSUS de l'image).
+        col-lg-6    : moitié de la largeur à partir de 992px (côte à côte).
+        order-*     : on garde l'ordre naturel ; sur mobile le texte vient en 1er,
+                      ce qui est volontaire (lecture avant l'illustration).
+      -->
+      <div class="col-12 col-lg-6">
+        <!-- .text-secondary reprend la teinte sourde du titre dans le wireframe. -->
+        <h1 class="fw-bold text-secondary">
+          Et Epigonus quidem amictu tenus philosophus, ut apparuit, prece frustra
+          temptata, sulcatis lateribus morti
+        </h1>
+        <!-- .text-muted : texte gris atténué pour le paragraphe descriptif. -->
+        <p class="text-muted mt-3">
+          Et Epigonus quidem amictu tenus philosophus, ut apparuit, prece frustra
+          temptata, sulcatis lateribus mortisque metu admoto turpi confessione
+          cogitatorum socium, quae nulla erant, fuisse firmavit cum nec vidisset
+          quicquam nec audisset penitus expers forensium rerum; Eusebius vero
+          obiecta fidentius negans, suspensus in eodem gradu constantiae stetit
+          latrocinium illud esse non sollici satis superque esse sibi suarum.
+        </p>
       </div>
-      <div class="col-md-6">
-        <img src="https://placehold.co/600x400" class="img-fluid" alt="...">
+
+      <!-- COLONNE IMAGE : moitié droite à partir de lg, pleine largeur en mobile. -->
+      <div class="col-12 col-lg-6">
+        <!--
+          Image « placeholder » générée à la volée (aucun fichier à fournir).
+          .img-fluid : RÈGLE responsive essentielle — l'image ne dépasse jamais
+                       la largeur de sa colonne (max-width:100%; height:auto).
+          .rounded + .border : coins arrondis et bordure légère, façon wireframe.
+        -->
+        <img src="https://placehold.co/600x400?text=IMAGE"
+             class="img-fluid rounded border w-100" alt="Illustration de la formation">
       </div>
     </div>
-  </div>
-  <!-- FIN GRILLE -->
+  </main>
 
-  <!-- CARROUSEL -->
-  <div id="carouselExampleCaptions" class="carousel slide">
-    <div class="carousel-indicators">
-      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
-      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
-    </div>
-    <div class="carousel-inner">
-      <div class="carousel-item active">
-        <img src="https://placehold.co/1200x400" class="d-block w-100" alt="...">
-        <div class="carousel-caption d-none d-md-block">
-          <h5>Responsive Web Design</h5>
-          <p>Some representative placeholder content for the first slide.</p>
-        </div>
-      </div>
-      <div class="carousel-item">
-        <img src="https://placehold.co/1200x400" class="d-block w-100" alt="...">
-        <div class="carousel-caption d-none d-md-block">
-          <h5>Framework Bootstrap</h5>
-          <p>Some representative placeholder content for the second slide.</p>
-        </div>
-      </div>
-      <div class="carousel-item">
-        <img src="https://placehold.co/1200x400" class="d-block w-100" alt="...">
-        <div class="carousel-caption d-none d-md-block">
-          <h5>MkDocs en intégration continue</h5>
-          <p>Some representative placeholder content for the third slide.</p>
-        </div>
-      </div>
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
-  </div>
-  <!-- FIN CARROUSEL -->
+  <!--
+    ========================================================================
+    LES 3 FORMATIONS EN AVANT — composant Carousel
+    ========================================================================
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    Carousel :
+    Attributs :
+      data-bs-ride="carousel" : démarre le défilement automatique au chargement.(À retirer si l'on veut un défilement uniquement manuel via les flèches.)
+  -->
+  <section class="container pb-5">
+    <div id="carouselFormations" class="carousel slide" data-bs-ride="carousel">
+
+      <!--
+        INDICATEURS (les petits « points » sous le carrousel). Chaque bouton cible une slide via data-bs-slide-to (index 0, 1, 2).
+        Ils donnent un repère visuel « slide 1/3 » et un accès direct au clic. À retirer si l'on ne veut que les flèches.
+      -->
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselFormations"
+                data-bs-slide-to="0" class="active" aria-current="true"
+                aria-label="Formation 1"></button>
+        <button type="button" data-bs-target="#carouselFormations"
+                data-bs-slide-to="1" aria-label="Formation 2"></button>
+        <button type="button" data-bs-target="#carouselFormations"
+                data-bs-slide-to="2" aria-label="Formation 3"></button>
+      </div>
+
+      <!--
+        .carousel-inner contient les 3 slides : UNE slide = UNE formation présentée.
+        Chaque slide réutilise la GRILLE (row/col) pour afficher, côte à côte sur desktop et empilés sur mobile : une image à gauche + un descriptif à droite (titre, texte, bouton « Commencer »). C'est ce qui transforme le simple bloc en véritable « présentation » de la formation.
+      -->
+      <div class="carousel-inner">
+
+        <!-- ============ SLIDE 1 — Responsive Web Design ============ -->
+        <!-- .active = slide affichée au chargement (obligatoire sur l'une d'elles). -->
+        <div class="carousel-item active">
+          <!--
+          Varialbes : 
+            .row .align-items-center : image et texte centrés verticalement.
+            .g-4 .p-4 : espace entre colonnes + marge interne de la slide.
+            .bg-body-secondary .rounded : panneau gris clair arrondi (façon wireframe).
+            .mx-1 : minuscule marge pour ne pas coller aux bords pendant la transition.
+          -->
+          <div class="row align-items-center g-4 p-4 mx-1 bg-body-secondary rounded">
+            <div class="col-12 col-md-5">
+              <!-- img-fluid : l'image ne déborde jamais de sa colonne (responsive). -->
+              <img src="https://placehold.co/500x300?text=Responsive"
+                   class="img-fluid rounded w-100" alt="Formation Responsive Web Design">
+            </div>
+            <div class="col-12 col-md-7 text-center text-md-start">
+              <h2 class="fw-bold text-secondary text-uppercase">Responsive Web Design</h2>
+              <p class="text-muted">
+                Apprenez à concevoir des interfaces « mobile-first » qui s'adaptent à toutes les tailles d'écran : grilles fluides, points de rupture et images flexibles.
+              </p>
+              <a href="module.html" class="btn btn-secondary">Commencer</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============ SLIDE 2 — Framework Bootstrap ============ -->
+        <div class="carousel-item">
+          <div class="row align-items-center g-4 p-4 mx-1 bg-body-secondary rounded">
+            <div class="col-12 col-md-5">
+              <img src="https://placehold.co/500x300?text=Bootstrap"
+                   class="img-fluid rounded w-100" alt="Formation Framework Bootstrap">
+            </div>
+            <div class="col-12 col-md-7 text-center text-md-start">
+              <h2 class="fw-bold text-secondary text-uppercase">Framework Bootstrap</h2>
+              <p class="text-muted">
+                Maîtrisez le framework CSS le plus répandu : système de grille,composants prêts à l'emploi et classes utilitaires pour construire vite et proprement.
+              </p>
+              <a href="module.html" class="btn btn-secondary">Commencer</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============ SLIDE 3 — MkDocs en intégration continue ============ -->
+        <div class="carousel-item">
+          <div class="row align-items-center g-4 p-4 mx-1 bg-body-secondary rounded">
+            <div class="col-12 col-md-5">
+              <img src="https://placehold.co/500x300?text=MkDocs"
+                   class="img-fluid rounded w-100" alt="Formation MkDocs en intégration continue">
+            </div>
+            <div class="col-12 col-md-7 text-center text-md-start">
+              <h2 class="fw-bold text-secondary text-uppercase">MkDocs en intégration continue</h2>
+              <p class="text-muted">
+                Publiez une documentation technique automatiquement à chaque test grâce à MkDocs et à une chaîne d'intégration continue.
+              </p>
+              <a href="module.html" class="btn btn-secondary">Commencer</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--
+        FLÈCHES DE CONTRÔLE (les triangles du wireframe).
+        Chaque bouton cible le carrousel via data-bs-target et indique le sens avec data-bs-slide="prev|next". 
+        Les .visually-hidden donnent un libellé aux lecteurs d'écran sans l'afficher.
+      -->
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselFormations" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Précédent</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselFormations" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Suivant</span>
+      </button>
+    </div>
+  </section>
+
+  <!--
+    ========================================================================
+    PIED DE PAGE
+    ========================================================================
+    Un peu déçu, y a pas de composant dédié « footer » dans Bootstrap : on l'assemble avec des
+    utilitaires (couleur, espacement, flex). C'est l'approche recommandée par
+    la doc (« Footers » dans les exemples).
+  -->
+  <footer class="bg-secondary text-white py-3 mt-auto">
+    <div class="container">
+      <!--
+        d-flex flex-column flex-sm-row : empilé en colonne sur très petit écran, puis en ligne dès 576px. gap-2 : espace régulier entre les liens.
+      -->
+      <div class="d-flex flex-column flex-sm-row gap-2">
+        <span class="fw-bold">NAV &amp; TAB</span>
+        <a href="#" class="link-light text-decoration-none">Contact</a>
+        <a href="#" class="link-light text-decoration-none">Mention légale</a>
+      </div>
+    </div>
+  </footer>
+
+  <!--
+  chargement en fin de page pour ne pas ralentir chargment de page
+  JS Bootstrap (bundle = Popper + plugins). OBLIGATOIRE pour les composants interactifs : hamburger de la navbar ET carrousel. 
+  code officiel
+  -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
 </body>
 </html>
